@@ -1,0 +1,31 @@
+<h3 class="text-search"><%= t('heading_title') %></h3>
+<%= form_tag("/pals/output", method: :get, class: 'form-search') do %>
+	<%= text_field_tag(:text, @phrase, class: 'form-control') %>
+	<%= text_field_tag(:locale, params[:locale] == nil ? 'en' : params[:locale], class: 'form-control d-none') %>
+	<%= submit_tag(t('search'), class: 'btn btn-primary go') %>
+<% end %>
+
+<style>
+	.go {
+		width: 100%;
+		margin-top: 10px;
+		background: transparent;
+		border: 1px solid white;
+		border-radius: 1px;
+		font-size: 20px;
+	}
+
+		.text-search {
+			text-align: center;
+			color: #fff;
+			line-height: 1.1em;
+			font-weight: 100;
+			margin-bottom: 40px;
+			font-size: 40px;
+			font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+		}
+	.container.col-11 {
+		position: relative;
+		top: 50px;
+	}
+</style>

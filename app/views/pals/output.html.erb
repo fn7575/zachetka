@@ -1,0 +1,221 @@
+<div class="res remodal-bg">
+	<% if @status == 'no-content' %>
+		<h3><%= t('adding_article') %> <%= params[:text] %></h3>
+		<br>
+		<div class="plainlinks" style="border:1px solid #a2a9b1; padding:0.25em 1em; margin-bottom:1em; background:#F5FАFF; color:black;">
+			<p><%= t('no_artciles_message') %></p>
+			<hr>
+
+			<%= raw t('block_advices_before_adding_artciles') %>
+
+		</div>
+
+		<div class="get_photo"><div class="preview_url_photo" style="
+		background: url('http://zabavnik.club/wp-content/uploads/Kartinka_3_26040225.png');
+		"></div><input onchange="setPhoto(this.value)" class="url_img" type="text" placeholder="<%= t('placeholder_img_link') %>"></div>
+		<div class="params"><p><%= t('additionaly_params_message') %>:</p><input type="text" class="short_desc rus" placeholder="<%= t('sd_msg') %>"></div>
+		<br>
+		<div id="editor-container" style="height: 375px;">
+		</div>
+		<br>
+		<div class="btn btn-primary" onclick="sendArticle()"><%= t('button_save_text') %></div>
+	<% elsif @status == 'ok' %>
+		<img style="margin: auto;display: inherit;max-width: 900px" src="<%= @pal.photo %>">
+		<br>
+		<hr>
+		<div class="html-container"><%= @pal.res.html_safe %></div>
+		<% if params[:locale] == 'en' || params[:locale] == nil %>
+			<!-- <a href="#" class="translate">translate it!</a> -->
+		<% end %>
+		<p><%= t('published') %>: <%= @pal.created_at.strftime("%H:%M:%S %Y.%m.%d") %></p>
+		<p><%= t('author') %>: <%= @pal.author %></p>
+		<% if current_user.email == @pal.author %>
+		<p class="editor-block"><%= t('editor_block_message') %>:<br><a data-remodal-target="modal" href="#"><%= t('action_edit_message') %></a><a onclick="deleteArticle(); return false;" href="#"><%= t('action_delete_message') %></a></p>
+		<script>
+			function editArticle() {
+          let content = quill.getContents(); content = quillGetHTML(content);
+          let url = $('.url_img').val();
+          let text = getFromUrl('text');
+          let locale = getFromUrl('locale');
+          let short_desc_rus = $('.short_desc.rus').val();
+
+          if(!locale) {
+              locale = 'en';
+          }
+
+          if(content == '' || url == '' || text == '' || short_desc_rus == '') {
+              alert('<%= t('error_add_content') %>');
+          } else {
+              window.open("/pals/edit_article?utf8=%E2%9C%93&text="+text+"&article="+encodeURIComponent(content)+"&photo_link="+url+"&sdr="+short_desc_rus+"&locale="+locale,"_self")
+          }
+			}
+
+			function deleteArticle() {
+          let text = getFromUrl('text');
+          let locale = getFromUrl('locale');
+
+          if(!locale) {
+              locale = 'en';
+          }
+
+          window.open("/pals/delete_article?utf8=%E2%9C%93&text="+text+"&locale="+locale,"_self")
+			}
+		</script>
+			<div class="remodal" data-remodal-id="modal">
+				<button data-remodal-action="close" class="remodal-close"></button>
+				<h2><%= t('editing_article_msg') %> <%= @pal.count %></h2>
+				<div><div class="preview_url_photo" style="
+				background: url('<%= @pal.photo %>');
+				"></div><p><%= t('photo_msg') %>:</p><input value="<%= @pal.photo %>" onchange="setPhoto(this.value)" class="url_img editor" type="text" placeholder="<%= t('placeholder_img_link') %>"><br><br><p><%= t('additionaly_params_message') %>:</p><input type="text" value="<%= @pal.shortDesc %>" class="short_desc rus" placeholder="<%= t('sd_msg') %>"></div>
+				<br>
+				<div id="editor-container" style="height: 375px;">
+				</div>
+				<br>
+				<button data-remodal-action="cancel" style="border-radius: 3px; padding: 13px 10px" class="remodal-cancel"><%= t('btn_cancel') %></button>
+				<button data-remodal-action="confirm" style="border-radius: 3px; padding: 13px 10px" class="remodal-confirm" onclick="editArticle()"><%= t('button_save_text') %></button>
+			</div>
+		<% end %>
+		<script>
+        window.onload = function() {
+            $('.element').css( { 'background': 'white url(https://techport-st.cdn.ngenix.net/assets/images/51534b4186014ecedd4e6fe573580c24.png)' } );
+            $('.txt-content h3').html('<%= @pal.count %>');
+            $('.txt-content p').html('<%= @pal.shortDesc %>');
+        };
+		</script>
+		<style>
+		.carousel-animate .element {
+				background-size: unset !important;
+			}
+			</style>
+	<% end %>
+</div>
+
+	<style>
+		a.translate {
+			font-size: 12px;
+			position: relative;
+			bottom: 1rem;
+		}
+		input.url_img.editor {
+			width: calc(100% - 100px);
+			position: relative;
+			top: 0;
+			margin: 0;
+		}
+		p.editor-block a {
+			margin-right: 20px;
+		}
+
+		p.editor-block {
+			font-size: 12px;
+		}
+		.params {
+			width: 49%;
+			display: inline-block;
+			padding: 10px;
+			position: absolute;
+		}
+		input.short_desc {
+			width: calc(100% - 100px);
+			min-width: 100px;
+			margin-bottom: 20px;
+		}
+		.get_photo {
+			padding: 10px;
+			position: relative;
+			width: 50%;
+			display: inline-block;
+		}
+
+		input.url_img {
+			width: calc(100% - 265px);
+			position: absolute;
+			top: 100px;
+			margin-left: 25px;
+		}
+
+		.preview_url_photo {
+			width: 200px;
+			height: 200px;
+			background-size: cover !important;
+			display: inline-block;
+			border-radius: 100%;
+			background-position: center !important;
+		}
+		.container {
+			padding-bottom: 20px;
+		}
+		.txt-content {
+			bottom: unset !important;
+			padding: 35px;
+		}
+
+		.main-bg.carousel-animate {
+			height: 150px;
+		}
+			.res {
+				margin-top: 200px;
+			}
+		button.ql-image {
+			display: none !important;
+		}
+		h2, h3, p {
+			color: black;
+		}
+		</style>
+<script>
+    function setPhoto(url) {
+        let objRE = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+
+        if(objRE.test(url)) {
+            $('.preview_url_photo').css('background', 'url(' + url + ')');
+        }
+    }
+    var quill = new Quill('#editor-container', {
+        modules: {
+            toolbar: [
+                [{ header: [1, 2, false] }],
+                ['bold', 'italic', 'underline'],
+                ['image', 'code-block']
+            ]
+        },
+        placeholder: '<%= t('placeholder_editor') %> <%= params[:text] %>',
+        theme: 'snow'
+    });
+
+    <% if current_user.email == @pal.author %>
+
+    document.querySelector(".ql-editor").innerHTML = '<%= @pal.res.html_safe %>';
+
+    <% end %>
+
+    function quillGetHTML(inputDelta) {
+        var tempCont = document.createElement("div");
+        (new Quill(tempCont)).setContents(inputDelta);
+        return tempCont.getElementsByClassName("ql-editor")[0].innerHTML;
+    }
+
+    function getFromUrl(key) {
+        var s = window.location.search;
+        s = s.match(new RegExp(key + '=([^&=]+)'));
+        return s ? s[1] : false;
+    }
+
+    function sendArticle() {
+        let content = quill.getContents(); content = quillGetHTML(content);
+        let url = $('.url_img').val();
+        let text = getFromUrl('text');
+        let locale = getFromUrl('locale');
+        let short_desc_rus = $('.short_desc.rus').val();
+
+        if(!locale) {
+            locale = 'en';
+				}
+
+        if(content == '' || url == '' || text == '' || short_desc_rus == '') {
+            alert('<%= t('error_add_content') %>');
+				} else {
+            window.open("/pals/create_article?utf8=%E2%9C%93&text="+text+"&article="+encodeURIComponent(content)+"&photo_link="+url+"&sdr="+short_desc_rus+"&locale="+locale,"_self")
+        }
+		}
+</script>

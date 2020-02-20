@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Онлайн-энциклопедия</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <meta http-equiv="Content-Language" content="ru">
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <!-- Main Quill library -->
+    <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+
+    <!-- Theme included stylesheets -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" rel="stylesheet">
+
+    <!-- Core build with no theme, formatting, non-essential modules -->
+    <link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
+    <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script type="text/javascript" src="http://katalogtepla.com/catalog/view/javascript/jquery/remodal.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://katalogtepla.com/catalog/view/javascript/jquery/remodal.css">
+    <link rel="stylesheet" type="text/css" href="http://katalogtepla.com/catalog/view/javascript/jquery/remodal-default-theme.css">
+    <script src="https://cdn.webrtc-experiment.com/Translator.js"> </script>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="form-inline my-2 my-lg-0">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item a-main"><%= link_to t('title'), pals_input_url %></a></li>
+          <% if user_signed_in? %>
+            <li class='nav-item'><%= link_to current_user.email, edit_user_registration_path, class: 'btn btn-outline-success col' %></li>
+            <li class='nav-item'><%= link_to t('exit'), destroy_user_session_path, class: 'btn btn-warning col', method: :delete %></li>
+          <% else %>
+            <li class='nav-item'><%= link_to t('registration'), new_user_registration_path, class: 'btn btn-outline-light col' %></li>
+            <li class='nav-item'><%= link_to t('enter'), new_user_session_path, class: 'btn btn-success col' %></li>
+          <% end %>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="h-cat">
+      <%= link_to t('all_articles'), pals_showall_url %>
+      <a href="/pals/output?getrandarticle=true&locale=<%= params[:locale] == nil ? 'en' : params[:locale] %>"><%= t('chance') %></a>
+      <div class="set_locale"><a href="#"><span class="locale active"><%= params[:locale] == 'ru' ?  t('russian') : t('english') %></span></a><a href="?locale=<%= params[:locale] == 'ru' ?  'en' : 'ru' %>"><br><span class="locale"><%= params[:locale] == 'ru' ?  t('english') : t('russian') %></span></a></div>
+    </div>
+
+    <div class="main-bg carousel-animate">
+      <div class="element el-1" style="background: url('https://bigenc.ru/media/2018/07/19/1237695504/33716.jpg.1440x-.png')"><div class="f-bg"></div><div class="txt-content"><h3><%= t('s1') %></h3><p><%= t('c1') %></p></div></div>
+      <div class="element el-2" style="background: url('https://bigenc.ru/media/2018/07/19/1237695505/33745.jpg.1440x-.png')"><div class="f-bg"></div><div class="txt-content"><h3><%= t('s2') %></h3><p><%= t('c2') %></p></div></div>
+      <div class="element el-3" style="background: url('https://bigenc.ru/media/2018/07/19/1237695511/36207.jpg.1440x-.png')"><div class="f-bg"></div><div class="txt-content"><h3><%= t('s3') %></h3><p><%= t('c3') %></p></div></div>
+      <div class="element el-4" style="background: url('https://bigenc.ru/media/2018/07/19/1237695510/33547.jpg.1440x-.png')"><div class="f-bg"></div><div class="txt-content"><h3><%= t('s4') %></h3><p><%= t('c4') %></p></div></div>
+    </div>
+
+    <style>
+      .set_locale {
+        display: inline-block;
+        color: white;
+        cursor: pointer;
+        float: right;
+        text-transform: lowercase;
+        text-align: right;
+        height: 37px;
+        overflow: hidden;
+        -webkit-transition: 0.5s ease all;
+        transition: 0.5s ease all;
+        position: relative;
+      }
+
+      .set_locale:hover {
+        height: 100%;
+      }
+
+      .set_locale:hover span.locale {
+        opacity: 1;
+      }
+
+      span.locale:hover {
+        background: #007bff;
+        border-color: transparent;
+      }
+
+      span.locale {
+        display: inline-block;
+        opacity: 0;
+        -webkit-transition: 0.5s ease all;
+        transition: 0.5s ease all;
+        border: 1px solid white;
+        padding: 5px 10px;
+        border-radius: 3px;
+        margin-bottom: 10px;
+      }
+
+      span.locale.active {
+        opacity: 1;
+      }
+      .h-cat {
+        position: relative;
+        z-index: 1;
+        padding: 10px 27px;
+        width: 100%;
+      }
+      h2, h3, p {
+        color: white;
+      }
+      .h-cat a {
+        color: white;
+        margin-right: 30px;
+      }
+      form#edit_user {
+        color: white;
+      }
+      li.nav-item {
+        margin: 0;
+        padding: 7px 10px;
+      }
+      li.nav-item.a-main a {
+        font-size: 24px;
+        text-decoration: none;
+        color: white;
+        transition: 0.5s ease all;
+      }
+
+      li.nav-item.a-main a:hover {
+        color: #46ccff;
+      }
+      .f-bg {
+        position: absolute;
+        background: linear-gradient(to bottom, rgba(0,0,0,.1)0%, rgba(0,0,0,.8)100%);
+        opacity: 1;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+      }
+      .carousel-animate {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        margin-top: -44px;
+      }
+
+      .carousel-animate .element {
+        position: relative;
+        height: inherit;
+        background-position: center !important;
+        background-size: cover !important;
+        display: none;
+      }
+      .main-bg h3, .main-bg p  {
+        text-align: center;
+        color: white;
+      }
+      .txt-content {
+        position: absolute;
+        bottom: 100px;
+        width: 100%;
+      }
+      .el-<%= rand(1..4) %> {
+        display: block !important;
+      }
+      nav.navbar.navbar-expand-lg.navbar-dark.bg-dark {
+        min-height: 68px;
+      }
+      .form-inline.my-2.my-lg-0.fix {
+        position: fixed;
+        z-index: 20;
+        width: 100%;
+        background: #333a41;
+        top: 0;
+        left: 0;
+        padding: 5px 15px;
+      }
+      label {
+        color: white;
+      }
+    </style>
+    <script>
+        window.onscroll = function() {
+            if(window.pageYOffset > 100) {
+                $('.form-inline.my-2.my-lg-0').addClass('fix');
+            } else {
+                $('.form-inline.my-2.my-lg-0').removeClass('fix');
+            }
+        }
+    </script>
+    <div class="container col-11">
+      <%= yield %>
+    </div>
+  </body>
+</html>

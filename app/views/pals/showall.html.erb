@@ -1,0 +1,28 @@
+<div class="res">
+  <h3><%= t('all_articles') %></h3>
+  <ul>
+  <% @res.count.times do |i| %>
+      <li><a href="/pals/output?utf8=✓&text=<%= @res[i]['count'] %>"><%= @res[i]['count'] %></a><p><%= @res[i]['shortDesc'] %></p></li>
+  <% end %>
+  </ul>
+</div>
+
+<style>
+.container {
+padding-bottom: 20px;
+}
+.txt-content {
+bottom: unset !important;
+padding: 35px;
+}
+
+.main-bg.carousel-animate {
+height: 150px;
+}
+.res {
+margin-top: 200px;
+}
+h2, h3, p {
+  color: black;
+}
+</style>

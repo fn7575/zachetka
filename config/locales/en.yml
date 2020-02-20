@@ -1,0 +1,118 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  heading_title: "Want to know about..."
+  search: "Search"
+  exit: "Exit"
+  enter: "Login"
+  registration: "Registration"
+  title: "Online-encyclopediya"
+  all_articles: "All articles"
+  chance: "I have a chance!"
+  author: "Author"
+  published: "Date published"
+  s1: "France"
+  c1: "State in Western Europe."
+  s2: "Football"
+  c2: "Team sport ball game."
+  s3: "Shakespeare"
+  c3: "English poet."
+  s4: "Florence"
+  c4: "City in Italy."
+  placeholder_editor: "Write an epic articles on topics"
+  error_add_content: "Not all data is filled! The article will be published only after filling in all the data!"
+  adding_article: "Creating article"
+  no_artciles_message: "No articles with this title on the site"
+  block_advices_before_adding_artciles: "<p>If you are going <b>to draw such an article</b>, please:</p><ul><li><b>do not copy texts</b> from other sites</li><li>read <a href=\"#start\" title=\"Quick start guide\">quick start guide</a> and <a href=\"#help\" title=\"Help for beginners\">help for beginners</a>;</li><li><b>refer to authoritative sources</b>, proving material of the article.</li><li><a href=\"/pals/output?utf8=%E2%9C%93&amp;text=Нейтральная точка зрения\" title=\"Neutral point of view\">be objective</a>; in particular, <a href=\"/pals/output?utf8=%E2%9C%93&amp;text=Конфликт интересов\" title=\"Conflict of interest\">do not write about yourself</a>.</li></ul>"
+  additionaly_params_message: "Additionaly parameters"
+  sd_msg: "Short description"
+  placeholder_img_link: "Put link to main image"
+  button_save_text: "Save"
+  added_message: "Article successfully added to site!"
+  added_message_below: "Thanks for help to our development."
+  ling_go_article: "Go to article"
+  russian: "Russian"
+  english: "English"
+  editor_block_message: "Action of editor"
+  action_edit_message: "Edit article"
+  action_delete_message: "Delete article"
+  delete_message: "Successfully deleted"
+  undelete_message: "Unsuccessfully deleted. Try again later."
+  edit_message: "Successfully edited"
+  unedit_message: "Unsuccessfully edited. Try again later."
+  btn_cancel: "Cancel editing"
+  photo_msg: "Image"
+  editing_article_msg: "Editing article"
+
+ru:
+  heading_title: "Хочу узнать об..."
+  search: "Поиск"
+  exit: "Выход"
+  enter: "Войти"
+  registration: "Регистрация"
+  title: "Онлайн-энциклопедия"
+  all_articles: "Все статьи"
+  chance: "Мне повезет!"
+  author: "Автор"
+  published: "Дата публикации"
+  s1: "Франция"
+  c1: "Государство в Западной Европе."
+  s2: "Футбол"
+  c2: "Командная спортивная игра с мячом."
+  s3: "Шекспир"
+  c3: "Английский поэт."
+  s4: "Флоренция"
+  c4: "Город в Италии."
+  placeholder_editor: "Напишите эпическую статью на тему"
+  error_add_content: "Не все данные заполнены. Статья может быть опубликована только после заполнения всех данных!"
+  adding_article: "Создание страницы"
+  no_artciles_message: "На сайте нет статьи с таким названием"
+  block_advices_before_adding_artciles: "<p>Если вы собираетесь <b>написать такую статью</b>, пожалуйста:</p><ul><li><b>не копируйте тексты</b> с других сайтов</li><li>прочитайте <a href=\"#start\" title=\"Руководство для быстрого старта\">руководство для быстрого старта</a> и <a href=\"#help\" title=\"Помощь начинающим\">помощь начинающим</a>;</li><li><b>ссылайтесь на авторитетные источники</b>, подтверждающие материал статьи. Статьи без источников, в особенности биографии современников, могут быть удалены;</li><li><a href=\"/pals/output?utf8=%E2%9C%93&amp;text=Нейтральная точка зрения\" title=\"Нейтральная точка зрения\">будьте объективны</a>; в частности, <a href=\"/pals/output?utf8=%E2%9C%93&amp;text=Конфликт интересов\" title=\"Конфликт интересов\">не пишите о себе</a>.</li></ul>"
+  additionaly_params_message: "Дополнительные параметры"
+  sd_msg: "Краткое описание"
+  placeholder_img_link: "Вставьте ссылку на главное изображение"
+  button_save_text: "Сохранить"
+  added_message: "Статья успешно добавлена на наш сайт!"
+  added_message_below: "Спасибо, что помогаете развиваться нашему сообществу."
+  ling_go_article: "Перейти к статье"
+  russian: "Русский"
+  english: "Английский"
+  editor_block_message: "Действия редактора"
+  action_edit_message: "Редактировать статью"
+  action_delete_message: "Удалить статью"
+  delete_message: "Статья успешно удалена"
+  undelete_message: "Не удалось удалить статью. Попробуйте еще раз."
+  edit_message: "Статья успешно отредактирована"
+  unedit_message: "Не удалось отредактировать статью. Попробуйте еще раз."
+  btn_cancel: "Отменить изменения"
+  photo_msg: "Изображение"
+  editing_article_msg: "Изменение статьи"
